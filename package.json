@@ -1,13 +1,14 @@
 {
   "name": "@lazysleep/screenshot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
   "files": [
     "lib/*"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",

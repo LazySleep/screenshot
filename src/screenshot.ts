@@ -25,7 +25,7 @@ export default function (img: HTMLImageElement, scale: number, success: SuccessF
   let areaEnd: Point | null;
   let mouse: Point | null;
   let mouseLeave = false;
-  let state: 'wait' | 'selecting' | 'selected' = 'wait';
+  let state: 'wait' | 'selecting' | 'selected' | 'finish' = 'wait';
 
   // 绘制
   function draw() {
@@ -38,7 +38,7 @@ export default function (img: HTMLImageElement, scale: number, success: SuccessF
       // 绘制十字线
       cvsUtil.cross(mouse, { horizontal: cvs.width * 2, vertical: cvs.height * 2 });
     }
-    if (['selecting', 'selected'].includes(state)) {
+    if (['selecting', 'selected', 'finish'].includes(state)) {
       // 绘制选中区域
       const _areaEnd: Point | null = state === 'selecting' ? mouse : areaEnd;
       if (!(areaStart && _areaEnd)) {
@@ -47,21 +47,23 @@ export default function (img: HTMLImageElement, scale: number, success: SuccessF
       if (state === 'selected') {
         toolBar.draw();
       }
-      // 绘制蒙版
-      cvsUtil.mask(Rect.fromPoint(areaStart, _areaEnd));
-      // 绘制选中区域边框
-      cvsUtil.rect(areaStart, _areaEnd);
-      // 绘制四角
-      const { bottomLeft, bottomRight, topRight, topLeft, width, height } = Rect.fromPoint(areaStart, _areaEnd, 5);
-      [bottomLeft, bottomRight, topRight, topLeft].forEach((p, index: number) => {
-        cvsUtil.simpleRightAngle(p, 80, (index + 1) as 1 | 2 | 3 | 4, 5);
-      });
-      // 绘制宽高显示
-      ctx.fillStyle = LINE_COLOR;
-      ctx.fillRect(topLeft.x, topLeft.y - 60, 250, 50);
-      ctx.font = '40px Arial';
-      ctx.fillStyle = 'white';
-      ctx.fillText(`${width} x ${height}`, topLeft.x + 10, topLeft.y - 20); // 填充文本内容
+      if (state !== 'finish') {
+        // 绘制蒙版
+        cvsUtil.mask(Rect.fromPoint(areaStart, _areaEnd));
+        // 绘制选中区域边框
+        cvsUtil.rect(areaStart, _areaEnd);
+        // 绘制四角
+        const { bottomLeft, bottomRight, topRight, topLeft, width, height } = Rect.fromPoint(areaStart, _areaEnd, 5);
+        [bottomLeft, bottomRight, topRight, topLeft].forEach((p, index: number) => {
+          cvsUtil.simpleRightAngle(p, 80, (index + 1) as 1 | 2 | 3 | 4, 5);
+        });
+        // 绘制宽高显示
+        ctx.fillStyle = LINE_COLOR;
+        ctx.fillRect(topLeft.x, topLeft.y - 60, 250, 50);
+        ctx.font = '40px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText(`${width} x ${height}`, topLeft.x + 10, topLeft.y - 20); // 填充文本内容
+      }
     }
   }
 
@@ -106,6 +108,8 @@ export default function (img: HTMLImageElement, scale: number, success: SuccessF
   {
     toolBar.appendAction(
       new FinishAction(() => {
+        state = 'finish';
+        draw();
         const areaInfo = Rect.fromPoint(areaStart!, areaEnd!);
         // 创建新 Canvas，将选定的区域绘制到其中
         const newCvs: HTMLCanvasElement = document.createElement('canvas');
