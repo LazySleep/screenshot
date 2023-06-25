@@ -44,7 +44,7 @@ export default function (img: HTMLImageElement, scale: number, success: SuccessF
       if (!(areaStart && _areaEnd)) {
         return;
       }
-      if (state === 'selected') {
+      if (state !== 'selecting') {
         toolBar.draw();
       }
       if (state !== 'finish') {

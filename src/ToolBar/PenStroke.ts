@@ -36,6 +36,7 @@ export default class PenStrok extends DrawToolBarAction {
       }
     }
   }
+
   /**
    * 鼠标抬起
    */
@@ -49,6 +50,11 @@ export default class PenStrok extends DrawToolBarAction {
         this.toolBar?.event.emit('push-history', () => this.myDrawShape(paths, lineWidth, color));
       }
     }
+  }
+
+  mouseleave(p: Point): void {
+    this.mouseup(p);
+    super.mouseleave(p);
   }
 
   draw(): void {

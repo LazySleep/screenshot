@@ -15,5 +15,6 @@ export default class PenStrok extends DrawToolBarAction {
      * 鼠标抬起
      */
     mouseup(p: Point): void;
+    mouseleave(p: Point): void;
     draw(): void;
 }
