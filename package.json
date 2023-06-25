@@ -1,0 +1,28 @@
+{
+  "name": "@lazysleep/screenshot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib/*"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LazySleep/screenshot.git"
+  },
+  "author": "lazysleep",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LazySleep/screenshot/issues"
+  },
+  "homepage": "https://github.com/LazySleep/screenshot#readme",
+  "dependencies": {
+    "modern-screenshot": "^4.4.26"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  }
+}
