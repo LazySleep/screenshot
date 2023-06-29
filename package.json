@@ -1,14 +1,17 @@
 {
   "name": "@lazysleep/screenshot",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "lib/index.js",
+  "keywords": [
+    "screenshot"
+  ],
   "files": [
     "lib/*"
   ],
   "scripts": {
     "build": "tsc",
-    "deploy": "npm publish --access public"
+    "deploy": "npm publish --access public --registry=https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
